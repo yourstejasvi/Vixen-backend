@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require("express")
 const mongoose = require("mongoose")
+const cors = require("cors")
 const productsRoutes = require('./routes/products')
 
 
@@ -14,6 +15,7 @@ app.use((req,res,next) => {
     console.log(req.path, req.method)
     next()
 })
+app.use(cors({origin:"http://localhost:3000"}))
 
 // routes
 app.use('/api/products', productsRoutes)
@@ -26,7 +28,7 @@ mongoose.connect(process.env.MONGO_URI)
         // listen for request
 
         app.listen(process.env.PORT, () => {
-            console.log("Connected to mongodb and Listening on port!", process.env.PORT)
+            console.log("Connected to mongodb and Listening on port", process.env.PORT)
         })
 
     })
